@@ -1,30 +1,28 @@
 #include "ft_printf.h"
-#include <stdlib.h>
-#include <stdarg.h>
 #include <unistd.h>
 
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
 	char	*str;
-	int		i;
+	size_t	s_i;
 	size_t	len;
 	size_t	size;
 
 	if (!s)
 		return (-1);
 	va_start(ap, s);
-	i = 0;
+	s_i = 0;
 	len = 0;
 	str = (char *)malloc(4096);
 	size = 4096;
-	while (s[i])
+	while (s[s_i])
 	{
-		if (s[i] == '%')
-			process_type_field(&len);
+		if (s[s_i] == '%')
+			process_type_field(str, &len, ap, s, &s_i);
 		else
 		{
-
+			str[len] = s[s_i];
 		}
 		if (len = size)
 			ft_realloc(&str, &size);
@@ -35,11 +33,30 @@ int	ft_printf(const char *s, ...)
 	return (len);
 }
 
+void	process_type_field(char *str, size_t *len, va_list ap, char *s, size_t *s_i)
+{
+	*s_i++;//cspdiuxX%
+	if (s[*s_i] == 'c')
+		str[*len] = (char)va_arg(ap, int);
+	if (s[*s_i] == 's')
+		ft_s();
+	if (s[*s_i] == 'p')
+	if (s[*s_i] == 'd')
+	if (s[*s_i] == 'i')
+	if (s[*s_i] == 'u')
+	if (s[*s_i] == 'x')
+	if (s[*s_i] == 'X')
+
+	if (s[*s_i] == '%')
+		str[*len] = '%';
+	*len++;
+}
+
 void	ft_realloc(char **str, size_t *size)
 {
-	char 	*new_str;
 	size_t	i;
 	size_t	i_size;
+	char 	*new_str;
 
 	i = 0;
 	i_size = *size;
