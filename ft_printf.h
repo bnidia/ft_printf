@@ -9,5 +9,8 @@
 int		ft_printf(const char *s, ...);
 void	process_type_field(char *str, size_t *len, va_list ap, char *s, size_t *s_i);
 void	ft_realloc(char **str, size_t *size);
+void	ft_s(char *str, int *len, char *s);
+void	ft_p(char *str, int *len, unsigned long long nbr);
+void 	ft_di(char *str, size_t *len, int num);
 
 #endif

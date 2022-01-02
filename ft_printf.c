@@ -18,11 +18,11 @@ int	ft_printf(const char *s, ...)
 	size = 4096;
 	while (s[s_i])
 	{
-		if (s[s_i] == '%')
+		if (s[s_i++] == '%')
 			process_type_field(str, &len, ap, s, &s_i);
 		else
 		{
-			str[len] = s[s_i];
+			str[len++] = s[s_i++];
 		}
 		if (len = size)
 			ft_realloc(&str, &size);
@@ -35,14 +35,15 @@ int	ft_printf(const char *s, ...)
 
 void	process_type_field(char *str, size_t *len, va_list ap, char *s, size_t *s_i)
 {
-	*s_i++;//cspdiuxX%
+	//*s_i++;//cspdiuxX%
 	if (s[*s_i] == 'c')
 		str[*len] = (char)va_arg(ap, int);
 	if (s[*s_i] == 's')
-		ft_s();
+		ft_s(str, len, va_arg(ap, char *));
 	if (s[*s_i] == 'p')
-	if (s[*s_i] == 'd')
-	if (s[*s_i] == 'i')
+		ft_p(str, len, va_arg(ap, unsigned long long));
+	if (s[*s_i] == 'd' || s[*s_i] == 'i')
+		ft_di(str, len, va_arg(ap, int));
 	if (s[*s_i] == 'u')
 	if (s[*s_i] == 'x')
 	if (s[*s_i] == 'X')
