@@ -7,20 +7,16 @@ void	ft_s(char *str, int *len, char *s)
 	i = 0;
 	if (s == NULL)
 	{
-		str[*len++]='(';
-		str[*len++]='n';
-		str[*len++]='u';
-		str[*len++]='l';
-		str[*len++]='l';
-		str[*len++]=')';
+		str[(*len)++]='(';
+		str[(*len)++]='n';
+		str[(*len)++]='u';
+		str[(*len)++]='l';
+		str[(*len)++]='l';
+		str[(*len)++]=')';
 		return;
 	}
 	while (s[i])
-	{
-		str[*len] = s[i];
-		*len++;
-		i++;
-	}
+		str[(*len)++] = s[i++];
 }
 
 void	ft_p(char *str, int *len, unsigned long long nbr)
@@ -49,7 +45,7 @@ void	ft_p(char *str, int *len, unsigned long long nbr)
 	*len += temp;
 }
 
-void ft_di(char *str, size_t *len, int num)
+void ft_di(char *str, int *len, int num)
 {
 
 }

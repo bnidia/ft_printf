@@ -6,10 +6,10 @@ int	ft_printf(const char *s, ...)
 	va_list	ap;
 	char	*str;
 	size_t	s_i;
-	size_t	len;
+	int 	len;
 	size_t	size;
 
-	if (!s)
+	if (s == NULL)
 		return (-1);
 	va_start(ap, s);
 	s_i = 0;
@@ -18,13 +18,13 @@ int	ft_printf(const char *s, ...)
 	size = 4096;
 	while (s[s_i])
 	{
-		if (s[s_i++] == '%')
-			process_type_field(str, &len, ap, s, &s_i);
-		else
+		if (s[s_i] == '%')
 		{
-			str[len++] = s[s_i++];
+			process_type_field(str, &len, ap, s, &s_i);
+			continue;
 		}
-		if (len = size)
+		str[len++] = s[s_i++];
+		if (len + 1024 > size)
 			ft_realloc(&str, &size);
 	}
 	write(1, str, len);
@@ -33,11 +33,11 @@ int	ft_printf(const char *s, ...)
 	return (len);
 }
 
-void	process_type_field(char *str, size_t *len, va_list ap, char *s, size_t *s_i)
+void	process_type_field(char *str, int *len, va_list ap, char *s, size_t *s_i)
 {
-	//*s_i++;//cspdiuxX%
+	(*s_i)++;
 	if (s[*s_i] == 'c')
-		str[*len] = (char)va_arg(ap, int);
+		str[(*len)++] = (char)va_arg(ap, int);
 	if (s[*s_i] == 's')
 		ft_s(str, len, va_arg(ap, char *));
 	if (s[*s_i] == 'p')
@@ -50,7 +50,7 @@ void	process_type_field(char *str, size_t *len, va_list ap, char *s, size_t *s_i
 
 	if (s[*s_i] == '%')
 		str[*len] = '%';
-	*len++;
+	(*s_i)++;
 }
 
 void	ft_realloc(char **str, size_t *size)
