@@ -1,75 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/04 18:23:08 by bnidia            #+#    #+#             */
+/*   Updated: 2022/01/04 19:53:34 by bnidia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <unistd.h>
 
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
-	char	*str;
 	size_t	s_i;
-	size_t	size;
 
 	if (s == NULL)
 		return (-1);
 	va_start(ap, s);
 	s_i = 0;
 	g_len = 0;
-	str = (char *)malloc(4096);
-	size = 4096;
+	g_size = 1024;
+	g_str = (char *)malloc(g_size);
 	while (s[s_i])
 	{
 		if (s[s_i] == '%')
 		{
-			process_type_field(str, ap, s, &s_i);
-			continue;
+			process_type_field(ap, s, &s_i);
+			continue ;
 		}
-		str[g_len++] = s[s_i++];
-		if (g_len + 1024 > size)
-			ft_realloc(&str, &size);
+		g_str[g_len++] = s[s_i++];
+		if (g_len + 1024 > g_size)
+			ft_realloc();
 	}
-	write(1, str, g_len);
-	free(str);
+	write(1, g_str, g_len);
+	free(g_str);
 	va_end(ap);
 	return (g_len);
 }
 
-void	process_type_field(char *str, va_list ap, const char *s, size_t *s_i)
+void	process_type_field(va_list ap, const char *s, size_t *s_i)
 {
 	(*s_i)++;
 	if (s[*s_i] == 'c')
-		str[g_len++] = (char)va_arg(ap, int);
+		g_str[g_len++] = (char)va_arg(ap, int);
 	if (s[*s_i] == 's')
-		ft_s(str, va_arg(ap, char *));
+		ft_s(va_arg(ap, char *));
 	if (s[*s_i] == 'p')
-		ft_p(str, va_arg(ap, unsigned long long));
+		ft_p(va_arg(ap, unsigned long long));
 	if (s[*s_i] == 'd' || s[*s_i] == 'i')
-		ft_di(str, va_arg(ap, int));
+		ft_di(va_arg(ap, int));
 	if (s[*s_i] == 'u')
+		ft_hex(va_arg(ap, unsigned int), 10, BASE_L);
 	if (s[*s_i] == 'x')
+		ft_hex(va_arg(ap, unsigned int), 16, BASE_L);
 	if (s[*s_i] == 'X')
-
+		ft_hex(va_arg(ap, unsigned int), 16, BASE_A);
 	if (s[*s_i] == '%')
-		str[g_len] = '%';
-	*s_i++;
+		g_str[g_len++] = '%';
+	(*s_i)++;
 }
 
-void	ft_realloc(char **str, size_t *size)
+void	ft_realloc(void)
 {
-	size_t	i;
-	size_t	i_size;
-	char 	*new_str;
+	int	i;
+	char	*new_str;
 
 	i = 0;
-	i_size = *size;
-	if (*size <= 16384)
-		*size *= 2;
+	if (g_size <= 16384)
+		g_size *= 2;
 	else
-		*size += 4096;
-	new_str = (char *)malloc(*size);
-	while(i <= i_size)
+		g_size += 4096;
+	new_str = (char *)malloc(g_size);
+	while (i < g_len)
 	{
-		new_str[i] = *str[i];
+		new_str[i] = g_str[i];
 		i++;
 	}
-	free(*str);
-	*str = new_str;
+	free(g_str);
+	g_str = new_str;
 }

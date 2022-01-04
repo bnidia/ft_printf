@@ -1,72 +1,109 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/04 18:07:41 by bnidia            #+#    #+#             */
+/*   Updated: 2022/01/04 18:22:48 by bnidia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-void	ft_s(char *str, const char *s)
+void	ft_s(const char *s)
 {
 	int	i;
 
 	i = 0;
 	if (s == NULL)
 	{
-		str[g_len++]='(';
-		str[g_len++]='n';
-		str[g_len++]='u';
-		str[g_len++]='l';
-		str[g_len++]='l';
-		str[g_len++]=')';
-		return;
+		ft_s("(null)");
+		return ;
 	}
 	while (s[i])
-		str[g_len++] = s[i++];
+		g_str[g_len++] = s[i++];
 }
 
-void	ft_p(char *str, unsigned long long nbr)
+void	ft_p(unsigned long long nbr)
 {
-	int 	i;
-	unsigned long long temp;
+	int					i;
+	unsigned long long	temp;
 
-
-	str[g_len++] = '0';
-	str[g_len++] = 'x';
+	if (nbr == 0)
+	{
+		ft_s("(nil)");
+		return ;
+	}
+	ft_s("0x");
 	i = 0;
 	temp = nbr;
-	while (temp > 0)
-	{
+	while (temp > 16 && i++ >= 0)
 		temp /= 16;
-		i++;
-	}
-	temp = i;
-	while (i > 0)
+	temp = i + 1;
+	while (i >= 0)
 	{
-		str[g_len + i] = BASE[nbr % 16];
+		g_str[g_len + i] = BASE_L[nbr % 16];
 		nbr /= 16;
 		i--;
 	}
 	g_len += (int)temp;
 }
 
-void ft_di(char *str, int nbr)
+void	ft_di(int nbr)
 {
 	long long	nbr_long;
-	int 		i;
+	long long	temp;
+	int			i;
 
 	i = 0;
 	nbr_long = nbr;
+	if (nbr == 0)
+		g_str[g_len++] = '0';
+	if (nbr == 0)
+		return ;
 	if (nbr_long < 0)
 	{
-		str[g_len++] = '-';
+		g_str[g_len++] = '-';
 		nbr_long *= -1;
 	}
-	while (nbr > 0)
-	{
-		i++;
-		nbr /= 10;
-	}
+	temp = nbr_long;
+	while (temp > 0 && i++ >= 0)
+		temp /= 10;
 	nbr = i;
-	while (i >= 0)
+	while (i-- > 0)
 	{
-		str[g_len + i] = BASE[nbr_long % 10];
+		g_str[g_len + i] = BASE_L[nbr_long % 10];
 		nbr_long /= 10;
-		i--;
 	}
 	g_len += nbr;
+}
+
+void	ft_hex(unsigned int nbr, int base, char *base_)
+{
+	int					i;
+	unsigned long long	temp;
+
+	if (nbr == 0)
+	{
+		g_str[g_len++] = '0';
+		return ;
+	}
+	i = 0;
+	temp = nbr;
+	while (temp > 0)
+	{
+		temp /= base;
+		i++;
+	}
+	temp = i;
+	i--;
+	while (i >= 0)
+	{
+		g_str[g_len + i] = base_[nbr % base];
+		nbr /= base;
+		i--;
+	}
+	g_len += (int)temp;
 }
