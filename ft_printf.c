@@ -16,14 +16,14 @@
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
-	size_t	s_i;
+	int		s_i;
 
 	if (s == NULL)
 		return (-1);
 	va_start(ap, s);
 	s_i = 0;
 	g_len = 0;
-	g_size = 1024;
+	g_size = 4096;
 	g_str = (char *)malloc(g_size);
 	while (s[s_i])
 	{
@@ -42,7 +42,7 @@ int	ft_printf(const char *s, ...)
 	return (g_len);
 }
 
-void	process_type_field(va_list ap, const char *s, size_t *s_i)
+void	process_type_field(va_list ap, const char *s, int *s_i)
 {
 	(*s_i)++;
 	if (s[*s_i] == 'c')
@@ -66,7 +66,7 @@ void	process_type_field(va_list ap, const char *s, size_t *s_i)
 
 void	ft_realloc(void)
 {
-	int	i;
+	int		i;
 	char	*new_str;
 
 	i = 0;

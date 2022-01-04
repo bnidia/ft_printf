@@ -18,12 +18,12 @@
 # include <stdarg.h>
 
 int		ft_printf(const char *s, ...);
-void	process_type_field(va_list ap, const char *s, size_t *s_i);
+void	process_type_field(va_list ap, const char *s, int *s_i);
 void	ft_realloc(void);
 void	ft_s(const char *s);
 void	ft_p(unsigned long long nbr);
 void	ft_di(int nbr);
-void	ft_hex(unsigned int nbr, int base, char *base_);
+void	ft_hex(unsigned int nbr, int base, const char *base_);
 int		g_len;
 char	*g_str;
 int		g_size;

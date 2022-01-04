@@ -23,7 +23,11 @@ void	ft_s(const char *s)
 		return ;
 	}
 	while (s[i])
+	{
 		g_str[g_len++] = s[i++];
+		if (g_len + 1024 > g_size)
+			ft_realloc();
+	}
 }
 
 void	ft_p(unsigned long long nbr)
@@ -39,7 +43,7 @@ void	ft_p(unsigned long long nbr)
 	ft_s("0x");
 	i = 0;
 	temp = nbr;
-	while (temp > 16 && i++ >= 0)
+	while (temp >= 16 && i++ >= 0)
 		temp /= 16;
 	temp = i + 1;
 	while (i >= 0)
@@ -80,7 +84,7 @@ void	ft_di(int nbr)
 	g_len += nbr;
 }
 
-void	ft_hex(unsigned int nbr, int base, char *base_)
+void	ft_hex(unsigned int nbr, int base, const char *base_)
 {
 	int					i;
 	unsigned long long	temp;
