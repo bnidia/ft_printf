@@ -6,7 +6,7 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:07:41 by bnidia            #+#    #+#             */
-/*   Updated: 2022/01/04 18:22:48 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/01/11 21:29:18 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_p(unsigned long long nbr)
 
 	if (nbr == 0)
 	{
-		ft_s("(nil)");
+		ft_s("0x0");
 		return ;
 	}
 	ft_s("0x");
