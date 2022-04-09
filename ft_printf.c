@@ -54,8 +54,7 @@ int	ft_printf(const char *str, ...)
 
 static void	process_width_precision(t_pf *z)
 {
-	z->str_i++;
-	while (z->str[z->str_i] == '0' || z->str[z->str_i] == '-' \
+	while (z->str[++z->str_i] == '0' || z->str[z->str_i] == '-' \
 		|| z->str[z->str_i] == ' ' || z->str[z->str_i] == '+' \
 		|| z->str[z->str_i] == '#')
 	{
@@ -69,7 +68,6 @@ static void	process_width_precision(t_pf *z)
 			z->f_plus = true;
 		else if (z->str[z->str_i] == '#')
 			z->f_hash = true;
-		z->str_i++;
 	}
 	z->precision = -1;
 	if (ft_isdigit(z->str[z->str_i]))

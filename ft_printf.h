@@ -20,23 +20,18 @@
 
 typedef struct s_pf
 {
-	// входящая строка
 	const char	*str;
 	int			str_i;
-	// выводимая строка
 	char		s[BUF_SIZE];
 	int			s_i;
 	int			s_printed;
-	// ширина и точность
 	int			width;
 	int			precision;
-	// флаги
 	int			f_minus;
 	int			f_plus;
 	int			f_hash;
 	int			f_space;
 	int			f_zero;
-	// возврат функции
 	int			return_value;
 }				t_pf;
 
