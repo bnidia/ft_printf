@@ -1,52 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 18:13:17 by bnidia            #+#    #+#             */
-/*   Updated: 2022/05/21 04:17:49 by bnidia           ###   ########.fr       */
+/*   Created: 2021/10/08 08:33:33 by bnidia            #+#    #+#             */
+/*   Updated: 2021/11/03 11:15:50 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef LIBFT_H
+# define LIBFT_H
 # include <stdlib.h>
-# include <stdarg.h>
-# include <stdbool.h>
 # include <unistd.h>
-# define BUF_SIZE 1024
-
-typedef struct s_pf
-{
-	// входящая строка
-	const char	*str;
-	int			str_i;
-	// выводимая строка
-	char		s[BUF_SIZE];
-	int			s_i;
-	int			s_printed;
-	// ширина и точность
-	int			width;
-	int			precision;
-	// флаги
-	int			f_minus;
-	int			f_plus;
-	int			f_hash;
-	int			f_space;
-	int			f_zero;
-	// возврат функции
-	int			return_value;
-}				t_pf;
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
-
-typedef unsigned long long	t_ull;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -99,7 +72,5 @@ void	ft_realloc(char **str, size_t str_len, size_t *str_cap);
 double	ft_max_double(double x, double y);
 double	ft_abs_d(double x);
 size_t	ft_numlen(unsigned long long num, int base);
-
-int		ft_printf(const char *str, ...);
 
 #endif

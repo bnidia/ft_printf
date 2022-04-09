@@ -6,80 +6,128 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:23:08 by bnidia            #+#    #+#             */
-/*   Updated: 2022/01/04 19:53:34 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 04:17:54 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
-int	ft_printf(const char *s, ...)
+static void	process_width_precision(t_pf *z);
+static int	process_type_field(va_list ap, t_pf *z);
+static void	reset_width_precision(t_pf *z);
+int			ft_print_out(t_pf *z);
+extern int	ft_c(t_pf *z, char c);
+extern int	ft_d(t_pf *z, int nbr);
+extern int	ft_p(t_pf *z, unsigned long long nbr);
+extern int	ft_s(t_pf *z, const char *str);
+extern int	ft_u(t_pf *z, unsigned int nbr);
+extern int	ft_x(t_pf *z, unsigned int nbr, char base_charset);
+
+int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
-	int		s_i;
+	t_pf	z;
 
-	if (s == NULL)
+	if (str == NULL)
 		return (-1);
-	va_start(ap, s);
-	s_i = 0;
-	g_len = 0;
-	g_size = 4096;
-	g_str = (char *)malloc(g_size);
-	while (s[s_i])
+	va_start(ap, str);
+	z = (t_pf){};
+	z.str = str;
+	while (z.str[z.str_i])
 	{
-		if (s[s_i] == '%')
+		if (z.str[z.str_i] == '%')
 		{
-			process_type_field(ap, s, &s_i);
+			process_width_precision(&z);
+			if (process_type_field(ap, &z) == -1)
+				return (-1);
+			reset_width_precision(&z);
 			continue ;
 		}
-		g_str[g_len++] = s[s_i++];
-		if (g_len + 1024 > g_size)
-			ft_realloc();
+		z.s[z.s_i++] = z.str[z.str_i++];
+		if (ft_print_out(&z) == -1)
+			return (-1);
 	}
-	write(1, g_str, g_len);
-	free(g_str);
 	va_end(ap);
-	return (g_len);
+	z.s_printed += (int)write(1, z.s, z.s_i);
+	return (z.s_printed);
 }
 
-void	process_type_field(va_list ap, const char *s, int *s_i)
+static void	process_width_precision(t_pf *z)
 {
-	(*s_i)++;
-	if (s[*s_i] == 'c')
-		g_str[g_len++] = (char)va_arg(ap, int);
-	if (s[*s_i] == 's')
-		ft_s(va_arg(ap, char *));
-	if (s[*s_i] == 'p')
-		ft_p(va_arg(ap, unsigned long long));
-	if (s[*s_i] == 'd' || s[*s_i] == 'i')
-		ft_di(va_arg(ap, int));
-	if (s[*s_i] == 'u')
-		ft_hex(va_arg(ap, unsigned int), 10, BASE_L);
-	if (s[*s_i] == 'x')
-		ft_hex(va_arg(ap, unsigned int), 16, BASE_L);
-	if (s[*s_i] == 'X')
-		ft_hex(va_arg(ap, unsigned int), 16, BASE_A);
-	if (s[*s_i] == '%')
-		g_str[g_len++] = '%';
-	(*s_i)++;
+	z->str_i++;
+	while (z->str[z->str_i] == '0' || z->str[z->str_i] == '-' \
+		|| z->str[z->str_i] == ' ' || z->str[z->str_i] == '+' \
+		|| z->str[z->str_i] == '#')
+	{
+		if (z->str[z->str_i] == '0')
+			z->f_zero = true;
+		else if (z->str[z->str_i] == '-')
+			z->f_minus = true;
+		else if (z->str[z->str_i] == ' ')
+			z->f_space = true;
+		else if (z->str[z->str_i] == '+')
+			z->f_plus = true;
+		else if (z->str[z->str_i] == '#')
+			z->f_hash = true;
+		z->str_i++;
+	}
+	z->precision = -1;
+	if (ft_isdigit(z->str[z->str_i]))
+		z->width = ft_atoi(&z->str[z->str_i]);
+	while (ft_isdigit(z->str[z->str_i]))
+		z->str_i++;
+	if (z->str[z->str_i] == '.')
+		z->precision = ft_atoi(&z->str[++z->str_i]);
+	while (ft_isdigit(z->str[z->str_i]))
+		z->str_i++;
 }
 
-void	ft_realloc(void)
+static int	process_type_field(va_list ap, t_pf *z)
 {
-	int		i;
-	char	*new_str;
+	int	err;
+
+	err = 0;
+	if (z->str[z->str_i] == 'c')
+		err = ft_c(z, va_arg(ap, int));
+	if (z->str[z->str_i] == 's')
+		err = ft_s(z, va_arg(ap, char *));
+	if (z->str[z->str_i] == 'p')
+		err = ft_p(z, va_arg(ap, t_ull));
+	if (z->str[z->str_i] == 'd' || z->str[z->str_i] == 'i')
+		err = ft_d(z, va_arg(ap, int));
+	if (z->str[z->str_i] == 'u')
+		err = ft_u(z, va_arg(ap, unsigned int));
+	if (z->str[z->str_i] == 'x')
+		err = ft_x(z, va_arg(ap, unsigned int), 'x');
+	if (z->str[z->str_i] == 'X')
+		err = ft_x(z, va_arg(ap, unsigned int), 'X');
+	if (z->str[z->str_i++] == '%')
+		z->s[z->s_i++] = '%';
+	return (err);
+}
+
+static void	reset_width_precision(t_pf *z)
+{
+	z->f_zero = false;
+	z->f_minus = false;
+	z->f_space = false;
+	z->f_plus = false;
+	z->f_hash = false;
+	z->width = 0;
+	z->precision = -1;
+}
+
+/* 24 bytes is enough because ull 0xffffffffffffffff - 18 chars */
+int	ft_print_out(t_pf *z)
+{
+	int	i;
 
 	i = 0;
-	if (g_size <= 16384)
-		g_size *= 2;
-	else
-		g_size += 4096;
-	new_str = (char *)malloc(g_size);
-	while (i < g_len)
+	if (z->s_i + 24 > BUF_SIZE)
 	{
-		new_str[i] = g_str[i];
-		i++;
+		i = (int) write(1, z->s, z->s_i);
+		z->s_printed += z->s_i;
+		z->s_i = 0;
 	}
-	free(g_str);
-	g_str = new_str;
+	return (i);
 }
