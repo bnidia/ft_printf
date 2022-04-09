@@ -32,10 +32,6 @@ else
 	OPTIMIZATION = -O1
 endif
 
-#LIB += -lft
-#LIBPATH += -L./libraries/libft/
-#LIBINC += -I./libraries/libft/
-
 all: $(NAME)
 
 # translation of assembly language code into machine code
@@ -50,7 +46,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) | obj
 # arc stage
 $(NAME): $(OBJ)
 	make -C ./libraries/libft/
-	mv ./libraries/libft/libft.a $(NAME)
+	cp ./libraries/libft/libft.a $(NAME)
 	ar rcs $@ $^
 
 obj:
