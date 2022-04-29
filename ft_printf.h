@@ -6,7 +6,7 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:13:17 by bnidia            #+#    #+#             */
-/*   Updated: 2022/05/21 04:44:07 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 04:54:18 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ double	ft_max_double(double x, double y);
 double	ft_abs_d(double x);
 size_t	ft_numlen(unsigned long long num, int base);
 
-int		ft_printf(const char *str, ...) __attribute__((format(printf, 1, 2)));
+int		ft_printf(const char *str, ...);
 
 #endif
