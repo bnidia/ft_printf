@@ -6,7 +6,7 @@
 #    By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:16:59 by bnidia            #+#    #+#              #
-#    Updated: 2021/10/26 16:05:02 by bnidia           ###   ########.fr        #
+#    Updated: 2022/05/21 04:43:56 by bnidia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,6 @@ else
 	OPTIMIZATION = -O1
 endif
 
-#LIB += -lft
-#LIBPATH += -L./libraries/libft/
-#LIBINC += -I./libraries/libft/
-
 all: $(NAME)
 
 # translation of assembly language code into machine code
@@ -50,7 +46,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) | obj
 # arc stage
 $(NAME): $(OBJ)
 	make -C ./libraries/libft/
-	mv ./libraries/libft/libft.a $(NAME)
+	cp ./libraries/libft/libft.a $(NAME)
 	ar rcs $@ $^
 
 obj:
@@ -82,7 +78,7 @@ test2:
 # rule for the cleaning
 clean:
 	make clean -C ./libraries/libft/
-	rm -rf $(OBJ)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	make fclean -C ./libraries/libft/

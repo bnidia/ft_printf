@@ -6,7 +6,7 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:23:08 by bnidia            #+#    #+#             */
-/*   Updated: 2022/01/04 19:53:34 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 04:45:17 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int	ft_printf(const char *str, ...)
 
 static void	process_width_precision(t_pf *z)
 {
-	z->str_i++;
-	while (z->str[z->str_i] == '0' || z->str[z->str_i] == '-' \
+	while (z->str[++z->str_i] == '0' || z->str[z->str_i] == '-' \
 		|| z->str[z->str_i] == ' ' || z->str[z->str_i] == '+' \
 		|| z->str[z->str_i] == '#')
 	{
@@ -69,7 +68,6 @@ static void	process_width_precision(t_pf *z)
 			z->f_plus = true;
 		else if (z->str[z->str_i] == '#')
 			z->f_hash = true;
-		z->str_i++;
 	}
 	z->precision = -1;
 	if (ft_isdigit(z->str[z->str_i]))

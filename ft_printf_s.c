@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   ft_printf_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:07:41 by bnidia            #+#    #+#             */
-/*   Updated: 2022/01/11 21:29:18 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 04:44:47 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,47 +18,41 @@
 #endif
 
 int			ft_print_out(t_pf *z);
+int			output_of_finite_spaces(t_pf *z, int numlen, int signlen);
+int			output_of_initial_spaces(t_pf *z, int numlen, int signlen);
+static void	null_exception(t_pf *z);
 
 int	ft_s(t_pf *z, const char *str)
 {
 	int	i;
+	int	strlen;
 
 	i = 0;
 	if (str == NULL)
 	{
-		if ((z->precision > 5 || z->precision == -1) && LINUX)
-			ft_s(z, "(null)");
-		else if (z->precision != 0 && !LINUX)
-			ft_s(z, "(null)");
-		else
-			ft_s(z, "");
+		null_exception(z);
 		return (0);
 	}
-	if (z->precision > (int)ft_strlen(str) || z->precision == -1)
-		z->precision = (int)ft_strlen(str);
-	if (z->f_minus == false && z->width && z->width > z->precision)
-	{
-		while (z->width-- > z->precision)
-		{
-			z->s[z->s_i++] = ' ';
-			if (ft_print_out(z) == -1)
-				return (-1);
-		}
-	}
+	strlen = (int)ft_strlen(str);
+	output_of_initial_spaces(z, strlen, 0);
+	if (z->precision > strlen || z->precision == -1)
+		z->precision = strlen;
 	while (str[i] && i < z->precision)
 	{
 		z->s[z->s_i++] = str[i++];
 		if (ft_print_out(z) == -1)
 			return (-1);
 	}
-	if (z->f_minus && z->width > z->precision)
-	{
-		while (z->width-- > z->precision)
-		{
-			z->s[z->s_i++] = ' ';
-			if (ft_print_out(z) == -1)
-				return (-1);
-		}
-	}
+	output_of_finite_spaces(z, z->precision, 0);
 	return (0);
+}
+
+static void	null_exception(t_pf *z)
+{
+	if ((z->precision > 5 || z->precision == -1) && LINUX)
+		ft_s(z, "(null)");
+	else if (z->precision != 0 && !LINUX)
+		ft_s(z, "(null)");
+	else
+		ft_s(z, "");
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   ft_printf_common_functions.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnidia <bnidia@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 08:42:42 by bnidia            #+#    #+#             */
-/*   Updated: 2022/04/09 10:17:11 by bnidia           ###    ########.fr      */
+/*   Updated: 2022/05/21 04:44:28 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		ft_print_out(t_pf *z);
 
-/* сброс незначащих значений */
 void	reset_insignificant_values(t_pf *z, int signlen)
 {
 	if (z->f_zero && z->width > 0 && z->precision <= 0)
@@ -27,7 +26,6 @@ void	reset_insignificant_values(t_pf *z, int signlen)
 		z->width = 0;
 }
 
-/* вывод начальных пробелов */
 int	output_of_initial_spaces(t_pf *z, int numlen, int signlen)
 {
 	int	spaces;
@@ -47,7 +45,6 @@ int	output_of_initial_spaces(t_pf *z, int numlen, int signlen)
 	return (0);
 }
 
-/*	подсчет и вывод нулей */
 int	output_of_zeros(t_pf *z, int numlen, int signlen)
 {
 	int	zero;
@@ -69,7 +66,6 @@ int	output_of_zeros(t_pf *z, int numlen, int signlen)
 	return (0);
 }
 
-/*	вывод конечных пробелов */
 int	output_of_finite_spaces(t_pf *z, int numlen, int signlen)
 {
 	int	spaces;
