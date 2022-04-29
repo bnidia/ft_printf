@@ -95,6 +95,6 @@ double	ft_max_double(double x, double y);
 double	ft_abs_d(double x);
 size_t	ft_numlen(unsigned long long num, int base);
 
-int		ft_printf(const char *str, ...) __attribute__((format(printf,1,2)));
+int		ft_printf(const char *str, ...) __attribute__((format(printf, 1, 2)));
 
 #endif
