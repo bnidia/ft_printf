@@ -6,7 +6,7 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:07:41 by bnidia            #+#    #+#             */
-/*   Updated: 2022/05/21 04:53:32 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 05:03:14 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_s(t_pf *z, const char *str)
 		return (0);
 	}
 	strlen = (int)ft_strlen(str);
+	if (z->precision == 0)
+		strlen = 0;
 	output_of_initial_spaces(z, strlen, 0);
 	if (z->precision > strlen || z->precision == -1)
 		z->precision = strlen;

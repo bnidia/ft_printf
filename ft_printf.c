@@ -6,15 +6,16 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:23:08 by bnidia            #+#    #+#             */
-/*   Updated: 2022/05/21 04:54:05 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 05:03:53 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	process_width_precision(t_pf *z);
+int			ft_printf_cycle(t_pf *z, va_list *ap);
+static int	process_width_precision(t_pf *z);
 static int	process_type_field(va_list ap, t_pf *z);
-static void	reset_width_precision(t_pf *z);
+void		reset_width_precision(t_pf *z);
 int			ft_print_out(t_pf *z);
 extern int	ft_c(t_pf *z, char c);
 extern int	ft_d(t_pf *z, int nbr);
@@ -33,26 +34,42 @@ int	ft_printf(const char *str, ...)
 	va_start(ap, str);
 	z = (t_pf){};
 	z.str = str;
-	while (z.str[z.str_i])
-	{
-		if (z.str[z.str_i] == '%')
-		{
-			process_width_precision(&z);
-			if (process_type_field(ap, &z) == -1)
-				return (-1);
-			reset_width_precision(&z);
-			continue ;
-		}
-		z.s[z.s_i++] = z.str[z.str_i++];
-		if (ft_print_out(&z) == -1)
-			return (-1);
-	}
+	z.str_len = (int)ft_strlen(str);
+	z.precision = -1;
+	if (ft_printf_cycle(&z, &ap) == -1)
+		return (-1);
 	va_end(ap);
 	z.s_printed += (int)write(1, z.s, z.s_i);
 	return (z.s_printed);
 }
 
-static void	process_width_precision(t_pf *z)
+int	ft_printf_cycle(t_pf *z, va_list *ap)
+{
+	while (z->str[z->str_i])
+	{
+		if (z->str[z->str_i] == '%')
+		{
+			if (process_width_precision(z) == -1)
+			{
+				write(1, z->s, z->s_i);
+				return (-1);
+			}
+			if (process_type_field(*ap, z) == -1)
+			{
+				write(1, z->s, z->s_i);
+				return (-1);
+			}
+			reset_width_precision(z);
+			continue ;
+		}
+		z->s[z->s_i++] = z->str[z->str_i++];
+		if (ft_print_out(z) == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+void	flag_cycle(t_pf *z)
 {
 	while (z->str[++z->str_i] == '0' || z->str[z->str_i] == '-' \
 		|| z->str[z->str_i] == ' ' || z->str[z->str_i] == '+' \
@@ -69,15 +86,31 @@ static void	process_width_precision(t_pf *z)
 		else if (z->str[z->str_i] == '#')
 			z->f_hash = true;
 	}
-	z->precision = -1;
+}
+
+static int	process_width_precision(t_pf *z)
+{
+	flag_cycle(z);
+	if (z->str[z->str_i] == '\0')
+		return (-1);
 	if (ft_isdigit(z->str[z->str_i]))
 		z->width = ft_atoi(&z->str[z->str_i]);
 	while (ft_isdigit(z->str[z->str_i]))
 		z->str_i++;
+	if (z->str[z->str_i] == '\0')
+		return (-1);
 	if (z->str[z->str_i] == '.')
-		z->precision = ft_atoi(&z->str[++z->str_i]);
+	{
+		z->precision = 0;
+		z->str_i++;
+	}
+	if (ft_isdigit(z->str[z->str_i]) == 1)
+		z->precision = ft_atoi(&z->str[z->str_i]);
 	while (ft_isdigit(z->str[z->str_i]))
 		z->str_i++;
+	if (z->str[z->str_i] == '\0')
+		return (-1);
+	return (0);
 }
 
 static int	process_type_field(va_list ap, t_pf *z)
@@ -87,45 +120,22 @@ static int	process_type_field(va_list ap, t_pf *z)
 	err = 0;
 	if (z->str[z->str_i] == 'c')
 		err = ft_c(z, va_arg(ap, int));
-	if (z->str[z->str_i] == 's')
+	else if (z->str[z->str_i] == 's')
 		err = ft_s(z, va_arg(ap, char *));
-	if (z->str[z->str_i] == 'p')
+	else if (z->str[z->str_i] == 'p')
 		err = ft_p(z, va_arg(ap, t_ull));
-	if (z->str[z->str_i] == 'd' || z->str[z->str_i] == 'i')
+	else if (z->str[z->str_i] == 'd' || z->str[z->str_i] == 'i')
 		err = ft_d(z, va_arg(ap, int));
-	if (z->str[z->str_i] == 'u')
+	else if (z->str[z->str_i] == 'u')
 		err = ft_u(z, va_arg(ap, unsigned int));
-	if (z->str[z->str_i] == 'x')
+	else if (z->str[z->str_i] == 'x')
 		err = ft_x(z, va_arg(ap, unsigned int), 'x');
-	if (z->str[z->str_i] == 'X')
+	else if (z->str[z->str_i] == 'X')
 		err = ft_x(z, va_arg(ap, unsigned int), 'X');
-	if (z->str[z->str_i++] == '%')
+	else if (z->str[z->str_i] == '%')
 		z->s[z->s_i++] = '%';
+	else
+		return (-1);
+	z->str_i++;
 	return (err);
-}
-
-static void	reset_width_precision(t_pf *z)
-{
-	z->f_zero = false;
-	z->f_minus = false;
-	z->f_space = false;
-	z->f_plus = false;
-	z->f_hash = false;
-	z->width = 0;
-	z->precision = -1;
-}
-
-/* 24 bytes is enough because ull 0xffffffffffffffff - 18 chars */
-int	ft_print_out(t_pf *z)
-{
-	int	i;
-
-	i = 0;
-	if (z->s_i + 24 > BUF_SIZE)
-	{
-		i = (int) write(1, z->s, z->s_i);
-		z->s_printed += z->s_i;
-		z->s_i = 0;
-	}
-	return (i);
 }

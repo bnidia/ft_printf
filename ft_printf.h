@@ -6,7 +6,7 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:13:17 by bnidia            #+#    #+#             */
-/*   Updated: 2022/05/21 04:54:18 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/05/21 05:04:08 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_pf
 {
 	const char	*str;
 	int			str_i;
+	int			str_len;
 	char		s[BUF_SIZE];
 	int			s_i;
 	int			s_printed;
@@ -95,6 +96,6 @@ double	ft_max_double(double x, double y);
 double	ft_abs_d(double x);
 size_t	ft_numlen(unsigned long long num, int base);
 
-int		ft_printf(const char *str, ...);
+int		ft_printf(const char *str, ...) __attribute__((format(printf, 1, 2)));
 
 #endif
