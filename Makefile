@@ -6,7 +6,7 @@
 #    By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:16:59 by bnidia            #+#    #+#              #
-#    Updated: 2021/10/26 16:05:02 by bnidia           ###   ########.fr        #
+#    Updated: 2022/05/21 05:22:42 by bnidia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ SRC += ft_itoa_base.c ft_printf_common_functions.c
 OBJ = $(addprefix $(OBJDIR), $(notdir $(SRC:.c=.o)))
 D_FILES = $(addprefix $(OBJDIR), $(notdir$(SRC:.c=.d)))
 HEADER = ft_printf.h
-
 CC = gcc -Werror -Wall -Wextra
 DEBUG_SWITCH = TRUE
 ifeq ($(DEBUG_SWITCH), TRUE)
