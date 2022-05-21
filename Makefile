@@ -6,7 +6,7 @@
 #    By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:16:59 by bnidia            #+#    #+#              #
-#    Updated: 2022/05/21 04:17:44 by bnidia           ###   ########.fr        #
+#    Updated: 2021/10/26 16:05:02 by bnidia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ else
 	OPTIMIZATION = -O1
 endif
 
+#LIB += -lft
+#LIBPATH += -L./libraries/libft/
+#LIBINC += -I./libraries/libft/
+
 all: $(NAME)
 
 # translation of assembly language code into machine code
@@ -46,7 +50,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) | obj
 # arc stage
 $(NAME): $(OBJ)
 	make -C ./libraries/libft/
-	cp ./libraries/libft/libft.a $(NAME)
+	mv ./libraries/libft/libft.a $(NAME)
 	ar rcs $@ $^
 
 obj:
@@ -63,18 +67,6 @@ test:
 	make all
 	gcc -g main.c libftprintf.a -o test
 
-test1:
-	echo "paulo-santana/ft_printf_tester"
-	git clone https://github.com/paulo-santana/ft_printf_tester.git
-	bash -c "cd ft_printf_tester && sh test"
-	rm -rf ft_printf_tester
-
-test2:
-	echo "Tripouille/printfTester"
-	git clone https://github.com/Tripouille/printfTester.git
-	make a -C ./printfTester/
-	rm -rf printfTester
-
 # rule for the cleaning
 clean:
 	make clean -C ./libraries/libft/
@@ -88,4 +80,4 @@ fclean: clean
 re: fclean all
 
 # directory exceptions
-.PHONY: all clean fclean norm re bonus test test1 test2
+.PHONY: all clean fclean norm re bonus test

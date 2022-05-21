@@ -1,0 +1,10 @@
+*.out
+*.o
+*.d
+*.a
+*.txt
+*.sh
+*.tgz
+*.zip
+*.jpg
+*.jpeg

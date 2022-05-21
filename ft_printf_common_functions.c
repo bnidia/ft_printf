@@ -14,6 +14,7 @@
 
 int		ft_print_out(t_pf *z);
 
+/* сброс незначащих значений */
 void	reset_insignificant_values(t_pf *z, int signlen)
 {
 	if (z->f_zero && z->width > 0 && z->precision <= 0)
@@ -26,26 +27,29 @@ void	reset_insignificant_values(t_pf *z, int signlen)
 		z->width = 0;
 }
 
-int	output_of_initial_spaces(t_pf *z, int numlen, int signlen)
+/* вывод начальных пробелов */
+int output_of_initial_spaces(t_pf *z, int numlen, int signlen)
 {
-	int	spaces;
+	int spaces;
 
 	spaces = 0;
 	if (z->width > numlen || z->precision < numlen)
 		spaces = z->width - numlen - signlen;
 	if (z->width > z->precision && z->precision > numlen)
 		spaces = z->width - z->precision - signlen;
+
 	while (spaces > 0 && !z->f_minus)
 	{
 		z->s[z->s_i++] = ' ';
-		if (ft_print_out(z) == -1)
+		if ( ft_print_out(z) == -1)
 			return (-1);
 		spaces--;
 	}
 	return (0);
 }
 
-int	output_of_zeros(t_pf *z, int numlen, int signlen)
+/*	подсчет и вывод нулей */
+int output_of_zeros(t_pf *z, int numlen, int signlen)
 {
 	int	zero;
 
@@ -54,8 +58,8 @@ int	output_of_zeros(t_pf *z, int numlen, int signlen)
 		zero = z->precision - numlen;
 	else if (z->f_zero && z->width > numlen)
 		zero = z->width - numlen - signlen;
-	if (z->f_zero && z->precision < numlen \
-							&& z->width > z->precision && z->precision > 0)
+	if (z->f_zero && z->precision < numlen && z->width > z->precision &&
+		z->precision > 0)
 		zero = 0;
 	while (zero--)
 	{
@@ -66,6 +70,7 @@ int	output_of_zeros(t_pf *z, int numlen, int signlen)
 	return (0);
 }
 
+/*	вывод конечных пробелов */
 int	output_of_finite_spaces(t_pf *z, int numlen, int signlen)
 {
 	int	spaces;

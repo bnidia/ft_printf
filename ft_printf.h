@@ -6,7 +6,7 @@
 /*   By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 18:13:17 by bnidia            #+#    #+#             */
-/*   Updated: 2022/05/21 04:17:49 by bnidia           ###   ########.fr       */
+/*   Updated: 2022/01/04 19:55:52 by bnidia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,23 @@
 
 typedef struct s_pf
 {
+	// входящая строка
 	const char	*str;
 	int			str_i;
+	// выводимая строка
 	char		s[BUF_SIZE];
 	int			s_i;
 	int			s_printed;
+	// ширина и точность
 	int			width;
 	int			precision;
+	// флаги
 	int			f_minus;
 	int			f_plus;
 	int			f_hash;
 	int			f_space;
 	int			f_zero;
+	// возврат функции
 	int			return_value;
 }				t_pf;
 
