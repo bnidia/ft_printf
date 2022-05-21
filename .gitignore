@@ -1,9 +1,3 @@
-/cmake-build-debug/
-/.vscode/
-/.idea/
-README.md
-.gitignore
-*.pdf
 *.out
 *.o
 *.d
@@ -12,8 +6,3 @@ README.md
 *.sh
 *.tgz
 *.zip
-*.jpg
-*.jpeg
-main.c
-test
-Makefile1
