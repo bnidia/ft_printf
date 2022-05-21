@@ -6,7 +6,7 @@
 #    By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:16:59 by bnidia            #+#    #+#              #
-#    Updated: 2022/05/21 05:07:52 by bnidia           ###   ########.fr        #
+#    Updated: 2021/10/26 16:05:02 by bnidia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC += ft_itoa_base.c ft_printf_common_functions.c
 OBJ = $(addprefix $(OBJDIR), $(notdir $(SRC:.c=.o)))
 D_FILES = $(addprefix $(OBJDIR), $(notdir$(SRC:.c=.d)))
 HEADER = ft_printf.h
-#
+
 CC = gcc -Werror -Wall -Wextra
 DEBUG_SWITCH = TRUE
 ifeq ($(DEBUG_SWITCH), TRUE)
@@ -65,9 +65,12 @@ test:
 
 test1:
 	echo "paulo-santana/ft_printf_tester"
-	git clone https://github.com/paulo-santana/ft_printf_tester.git
+	git clone https://github.com/rustem-spb/ft_printf_tester.git
+#	git clone https://github.com/paulo-santana/ft_printf_tester.git
 	bash -c "cd ft_printf_tester && sh test"
 	rm -rf ft_printf_tester
+test11:
+	bash -c "cd ft_printf_tester && sh test"
 
 test2:
 	echo "Tripouille/printfTester"

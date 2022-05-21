@@ -34,8 +34,8 @@ int	ft_s(t_pf *z, const char *str)
 		return (0);
 	}
 	strlen = (int)ft_strlen(str);
-	if (z->precision == 0)
-		strlen = 0;
+	if (z->precision != -1 && z->precision < strlen)
+		strlen = z->precision;
 	output_of_initial_spaces(z, strlen, 0);
 	if (z->precision > strlen || z->precision == -1)
 		z->precision = strlen;
