@@ -117,8 +117,7 @@ static void	reset_width_precision(t_pf *z)
 	z->precision = -1;
 }
 
-/* ull 0xffffffffffffffff - 18 chars
- * */
+/* 24 bytes is enough because ull 0xffffffffffffffff - 18 chars */
 int	ft_print_out(t_pf *z)
 {
 	int	i;

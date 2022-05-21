@@ -72,7 +72,5 @@ int	ft_x(t_pf *z, unsigned int nbr, char base_charset)
 // вывод конечных пробелов
 	if (output_of_finite_spaces(z, numlen, signlen) == -1)
 		return (-1);
-
 	return (0);
 }
-

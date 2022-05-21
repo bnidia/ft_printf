@@ -67,6 +67,18 @@ test:
 	make all
 	gcc -g main.c libftprintf.a -o test
 
+test1:
+	echo "paulo-santana/ft_printf_tester"
+	git clone https://github.com/paulo-santana/ft_printf_tester.git
+	bash -c "cd ft_printf_tester && sh test"
+	rm -rf ft_printf_tester
+
+test2:
+	echo "Tripouille/printfTester"
+	git clone https://github.com/Tripouille/printfTester.git
+	make a -C ./printfTester/
+	rm -rf printfTester
+
 # rule for the cleaning
 clean:
 	make clean -C ./libraries/libft/
@@ -80,4 +92,4 @@ fclean: clean
 re: fclean all
 
 # directory exceptions
-.PHONY: all clean fclean norm re bonus test
+.PHONY: all clean fclean norm re bonus test test1 test2

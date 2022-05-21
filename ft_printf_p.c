@@ -11,35 +11,35 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#if defined(__linux__) || defined(linux) || defined(__linux)
+# define PREFIX "(nil)"
+#else
+# define PREFIX "0x"
+#endif
 
 extern void	ft_itoa_base(t_pf *z, t_ull nbr, int base, const char *base_);
 int			ft_print_out(t_pf *z);
+int			output_of_finite_spaces(t_pf *z, int numlen, int signlen);
+int			output_of_initial_spaces(t_pf *z, int numlen, int signlen);
+int			ft_s(t_pf *z, const char *str);
 
 int	ft_p(t_pf *z, t_ull nbr)
 {
 	int	numlen;
 
 	numlen = (int)ft_numlen(nbr, 16) + 2;
-	if (z->f_minus == false && z->width > numlen)
+	if (nbr == 0)
 	{
-		while (z->width-- > numlen)
-		{
-			z->s[z->s_i++] = ' ';
-			if (ft_print_out(z) == -1)
-				return (-1);
-		}
+		if (ft_s(z, PREFIX) == -1)
+			return (-1);
+		return (0);
 	}
+	if (output_of_initial_spaces(z, numlen, 0) == -1)
+		return (-1);
 	z->s[z->s_i++] = '0';
 	z->s[z->s_i++] = 'x';
 	ft_itoa_base(z, nbr, 16, "0123456789abcdef");
-	if (z->f_minus && z->width > numlen)
-	{
-		while (z->width-- > numlen)
-		{
-			z->s[z->s_i++] = ' ';
-			if (ft_print_out(z) == -1)
-				return (-1);
-		}
-	}
+	if (output_of_finite_spaces(z, numlen, 0) == -1)
+		return (-1);
 	return (0);
 }
