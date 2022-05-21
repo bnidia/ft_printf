@@ -11,6 +11,11 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#if defined(__linux__) || defined(linux) || defined(__linux)
+# define LINUX 1
+#else
+# define LINUX 0
+#endif
 
 int			ft_print_out(t_pf *z);
 
@@ -21,9 +26,9 @@ int	ft_s(t_pf *z, const char *str)
 	i = 0;
 	if (str == NULL)
 	{
-		if ((z->precision > 5 || z->precision == -1) && __linux__)
+		if ((z->precision > 5 || z->precision == -1) && LINUX)
 			ft_s(z, "(null)");
-		else if ((z->precision != 0 && !(__linux__)))
+		else if (z->precision != 0 && !LINUX)
 			ft_s(z, "(null)");
 		else
 			ft_s(z, "");
