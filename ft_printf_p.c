@@ -14,7 +14,7 @@
 #if defined(__linux__) || defined(linux) || defined(__linux)
 # define PREFIX "(nil)"
 #else
-# define PREFIX "0x"
+# define PREFIX "0x0"
 #endif
 
 extern void	ft_itoa_base(t_pf *z, t_ull nbr, int base, const char *base_);

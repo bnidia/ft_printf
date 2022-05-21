@@ -21,7 +21,9 @@ int	ft_s(t_pf *z, const char *str)
 	i = 0;
 	if (str == NULL)
 	{
-		if (z->precision > 5 || z->precision == -1)
+		if ((z->precision > 5 || z->precision == -1) && __linux__)
+			ft_s(z, "(null)");
+		else if ((z->precision != 0 && !(__linux__)))
 			ft_s(z, "(null)");
 		else
 			ft_s(z, "");
