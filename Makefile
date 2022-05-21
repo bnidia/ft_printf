@@ -6,11 +6,7 @@
 #    By: bnidia <bnidia@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:16:59 by bnidia            #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/05/21 04:54:24 by bnidia           ###   ########.fr        #
-=======
-#    Updated: 2021/10/26 16:05:02 by bnidia           ###   ########.fr        #
->>>>>>> 42
+#    Updated: 2022/05/21 05:07:52 by bnidia           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +17,8 @@ NAME 	= libftprintf.a
 SRCDIR = ./
 OBJDIR = ./obj/
 
-<<<<<<< HEAD
-SRC	= ft_printf.c ft_printf_c.c ft_printf_d.c ft_printf_p.c
-SRC	+= ft_printf_s.c ft_printf_u.c ft_printf_x.c
-=======
 SRC	= ft_printf.c ft_printf_c.c ft_printf_d.c ft_printf_p.c ft_printf_s.c
 SRC	+= ft_printf_u.c ft_printf_x.c ft_print_out.c reset_width_precision.c
->>>>>>> 42
 SRC += ft_itoa_base.c ft_printf_common_functions.c
 OBJ = $(addprefix $(OBJDIR), $(notdir $(SRC:.c=.o)))
 D_FILES = $(addprefix $(OBJDIR), $(notdir$(SRC:.c=.d)))
@@ -70,11 +61,7 @@ norm:
 
 test:
 	make all
-<<<<<<< HEAD
-	gcc -g main.c libftprintf.a -o test
-=======
 	gcc -g main.c libftprintf.a -o test #&& ./test | cat -e
->>>>>>> 42
 
 test1:
 	echo "paulo-santana/ft_printf_tester"
