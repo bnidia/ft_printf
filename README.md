@@ -1,3 +1,12 @@
+# ft_printf
+<img align="right" src="https://badge42.vercel.app/api/v2/cl3enoo9k004009muhk5a94tj/project/2398393" alt="bnidia's 42 ft_printf Score" />
+<img align="right" alt="Progress" src="https://github.com/bnidia/ft_printf/blob/master/passed.png" />
+<p>Этот проект средней сложности, школьная оценка - 70 часов работы.</p>
+<p>Мне предстояло переписать библиотечную функцию <a href="https://www.opennet.ru/man.shtml?topic=printf&category=3&russian=0">printf</a> с ключами **cspdiuxX**. Так же реализована бонусная часть проекта которая позволяет работать с шириной, точностью, спецификаторами пробела, +, -, #, 0. Полный текст задания находится <a href="https://github.com/rustem-spb/ft_printf/blob/master/en.subject.pdf">здесь</a>.</p>
+<p>Функция ft_printf значительно ускорена, за счет отсутствия функции malloc. Вся необходимая память выделяется на стеке. А так же ускорение происходит за счет использования буфера в один килобайт под выводимую строку. Статистически выведено, что <a href="https://ru.wikipedia.org/wiki/%D0%94%D0%BB%D0%B8%D0%BD%D0%B0_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8">средняя длина строки составляет от 45 до 75 знаков</a> Однако если мы ожидаем очень длинный вывод, то мы можем увеличить буфер под строку, который указан в заголовочном файле в определении BUF_SIZE </p>
+<p>Также этот проект научил меня работать с <a href="https://www.opennet.ru/man.shtml?topic=va_arg&category=3&russian=0">переменным количеством аргументов функции stdarg</a></p>
+<p>Проект соответствует школьным правилам оформления кода <a href="https://rbellero.notion.site/The-Norm-v-3-0-a32a9f8f32654610b90504289f92e0f1">The Norm v.3.0</a></p>
+
 ###Структура спецификатора формата
 Спецификатор формата имеет вид:
 
