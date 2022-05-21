@@ -2,7 +2,7 @@
 <img align="right" src="https://badge42.vercel.app/api/v2/cl3enoo9k004009muhk5a94tj/project/2398393" alt="bnidia's 42 ft_printf Score" />
 
 ### This project is pretty straightforward, you have to recode printf. You will learn what is and how to implement variadic functions. Once you validate it, you will reuse this function in your future projects.
-
+<img align="right" src="https://github.com/bnidia/ft_printf/blob/master/ft_printf_test.gif" alt="test passing" />
 I had to rewrite the printf library function with the keys **cspdiuxX**. The bonus part of the project is also implemented, which allows you to work with width, accuracy, space specifiers, +, -, #, 0. The full text of the task is here.
 
 ### Progress
