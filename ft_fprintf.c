@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_fprintf.h"
 
 int			ft_printf_cycle(t_pf *z, va_list *ap);
 static int	process_width_precision(t_pf *z);
